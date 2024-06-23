@@ -1,38 +1,45 @@
-(() => {
-  const $counter = document.getElementById("js-counter");
-
-  const clickHandler = (e) => {
-    const $targetButton = e.currentTarget;
-    let currentCount = parseInt($counter.textContent);
-    if ($targetButton.textContent === "+") {
-      $counter.textContent = currentCount + 1;
-    } else if ($targetButton.textContent === "+10") {
-      $counter.textContent = currentCount + 10;
-    } else if ($targetButton.textContent === "-10") {
-  //     $counter.textContent = currentCount - 10;
-  //   } else {
-  //     $counter.textContent = currentCount - 1;
-  //   }
-  // };
-  // 0より下に行かないように設定
-  $counter.textContent = Math.max(0, currentCount - 10);
-  if (currentCount - 10 < 0) {
-    loadVideo();
+class Counter {
+  constructor(elementId) {
+    this.$counter = document.getElementById(elementId);
+    this.currentCount = parseInt(this.$counter.textContent);
+    this.init();
   }
-} else {
-  // 0より下に行かないように設定
-  $counter.textContent = Math.max(0, currentCount - 1);
-  if (currentCount - 1 < 0) {
-    loadVideo();
+
+  init() {
+    const buttons = document.getElementsByClassName("js-button");
+    for (let button of buttons) {
+      button.addEventListener("click", (e) => this.clickHandler(e));
+    }
+  }
+
+  clickHandler(e) {
+    const $targetButton = e.currentTarget;
+    if ($targetButton.textContent === "+") {
+      this.updateCounter(1);
+    } else if ($targetButton.textContent === "+10") {
+      this.updateCounter(10);
+    } else if ($targetButton.textContent === "-10") {
+      this.updateCounter(-10);
+    } else {
+      this.updateCounter(-1);
+    }
+  }
+
+  updateCounter(value) {
+    this.currentCount += value;
+    this.currentCount = Math.max(0, this.currentCount);
+    this.$counter.textContent = this.currentCount;
+    if (this.currentCount === 0 && value < 0) {
+      this.loadVideo();
+      alert("これ以上押せません!!");
+    }
+  }
+
+  loadVideo() {
+    // 動画をロードする処理をここに追加
   }
 }
-};
-  for (
-    let index = 0;
-    index < document.getElementsByClassName("js-button").length;
-    index++
-  ) {
-    document.getElementsByClassName("js-button")
-      [index].addEventListener("click", (e) => clickHandler(e));
-  }
-})();
+
+document.addEventListener("DOMContentLoaded", () => {
+  new Counter("js-counter");
+});
