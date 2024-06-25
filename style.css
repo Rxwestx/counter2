@@ -1,11 +1,16 @@
+body{
+  transition: .5s;
+}
+
 .counter {
   text-align: center;
-  padding: 10%;
+  margin: 20px;
+  padding: 50px;
   border: 2px solid #000;
 }
 .counter-number{
   font-size: 50px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .button{
   font-size: 20px;
@@ -22,6 +27,53 @@
   opacity: 0.8;
   transition: opacity .25s;
 }
-/* .button{}
-.button{}
-.button{} */
+
+.input{
+  visibility: hidden;
+
+}
+
+.label {
+  position:absolute;
+  width: 90px;
+  height: 45px;
+  background-color: #000;
+  border-radius: 30Px;
+  cursor: pointer;
+}
+.circle{
+  width: 38px;
+  background-color: #fff;
+  height: 38px;
+  border-radius: 50%;
+  top: 3px;
+  position: absolute;
+  left: 3px;
+  animation: toggleOff 0.4s
+  linear forwards;
+}
+
+.input:checked + .label{
+    background-color: #36d7ec;
+}
+.input:checked + .label .circle{
+    animation: toggleOn .4s
+    linear forwards;
+}
+
+@keyframes toggleOn {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(45px);
+  }
+}
+@keyframes toggleOff {
+  0%{
+    transform: translateX(45px);
+  }
+  100%{
+    transform: translateX(0);
+  }
+}
